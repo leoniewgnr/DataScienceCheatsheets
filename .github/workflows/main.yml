@@ -1,18 +1,31 @@
 name: Build LaTeX document
 on: [push]
 jobs:
-  build_pdf:
+  build_latex:
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
+    - name: Set up Git repository
       uses: actions/checkout@v2
-
-    - name: Setup LaTeX
+      
+    - name: Set up TeX Live
+      uses: xu-cheng/latex-action@v2
+      with:
+        # Update TeX Live to the latest version
+        update: true
+        # Install any additional packages you need here
+        extra_packages: |
+          ngerman
+          
+    - name: Copy LaTeX4EI template files
       run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive texlive-science texlive-fonts-extra
+        cp -rcheat_sheets/latex4ei ./
+        sudo mktexlsr
 
     - name: Compile LaTeX document
-      run: pdflatex data_science_case.tex
-      working-directory: ./cheat_sheets
+      run: latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 data_science_case.tex
 
+    - name: Upload PDF
+      uses: actions/upload-artifact@v2
+      with:
+        name: data_science_case
+        path: ./data_science_case.pdf
