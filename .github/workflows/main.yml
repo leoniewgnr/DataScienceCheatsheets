@@ -11,7 +11,8 @@ jobs:
       uses: xu-cheng/latex-action@v3
       with:
         root_file: cheat_sheets/data_science_case.tex
-        extra_local_packages: ./cheat_sheets/latex4ei/
+      env:
+        TEXINPUTS: ".:./cheat_sheets/latex4ei//:"
           
     - name: Upload PDF
       uses: actions/upload-artifact@v3
