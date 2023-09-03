@@ -3,11 +3,12 @@ on: [push]
 jobs:
   build_latex:
     runs-on: ubuntu-latest
-    env:
-      TEXINPUTS: ./cheat_sheets/latex4ei//:
     steps:
     - name: Set up Git repository
       uses: actions/checkout@v3
+      
+    - name: Set TEXINPUTS
+      run: echo "TEXINPUTS=./cheat_sheets/latex4ei//:" >> $GITHUB_ENV
 
     - name: Compile LaTeX document
       uses: xu-cheng/latex-action@v3
