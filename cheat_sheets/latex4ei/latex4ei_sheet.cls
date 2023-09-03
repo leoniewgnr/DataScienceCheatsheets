@@ -99,15 +99,12 @@
 
 	\pagestyle{fancy}
 	\fancyhf{}
-
-	\AtBeginDocument{
-	\fancyfoot[C]{\EngGer{from}{von} \theauthor\ -- Mail: \email{\theemail}}
-	}
+ 
 	\renewcommand{\headrulewidth}{0.0pt} %obere Linie ausblenden
 	\renewcommand{\footrulewidth}{0.1pt} %obere Linie ausblenden
 
 	\fancyfoot[R]{\EngGer{Last revised}{Stand}: \themydate \qquad \thepage/\pageref{LastPage}}
-	\fancyfoot[L]{Homepage: \url{\thewebsite} -- \EngGer{Please report mistakes \emph{immediately}}{Fehler bitte \emph{sofort} melden}.}
+	\fancyfoot[L]{Homepage: \url{\thewebsite}}
 
 
 % Title
