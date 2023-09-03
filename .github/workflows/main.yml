@@ -10,17 +10,14 @@ jobs:
     - name: Set up TeX Live
       uses: xu-cheng/latex-action@v2
       with:
-        # Update TeX Live to the latest version
-        update: true
-        # Install any additional packages you need here
-        extra_packages: |
-          ngerman
-          
-    - name: Copy LaTeX4EI template files
-      run: |
-        cp -rcheat_sheets/latex4ei ./
-        sudo mktexlsr
+        root_file: data_science_case.tex
+        extra_packages: ngerman
+        # Add other options if necessary
 
+    - name: Copy LaTeX4EI template files
+      run: cp -r cheat_sheets/latex4ei ./
+      # you may also add 'sudo mktexlsr' if necessary
+      
     - name: Compile LaTeX document
       run: latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 data_science_case.tex
 
