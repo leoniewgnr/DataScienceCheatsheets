@@ -10,7 +10,7 @@ jobs:
     - name: Setup LaTeX
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive
+        sudo apt-get install -y texlive texlive-science
 
     - name: Compile LaTeX document
       run: pdflatex data_science_case.tex
