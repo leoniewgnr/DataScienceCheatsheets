@@ -27,7 +27,7 @@
 % make three column design possible
 % ----------------------------------------------------------------------
 	\newcounter{columnnumber}
-	\setcounter{columnnumber}{3}
+	\setcounter{columnnumber}{4}
 	\DeclareOption{threecolumn}{\setcounter{columnnumber}{3}}
 
 
