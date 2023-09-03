@@ -310,6 +310,100 @@ sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
 \end{lstlisting}
 \end{sectionbox}
 
+\section{Other commands of important packages}
+\begin{sectionbox}
+\subsection{NumPy Commands}
+\begin{lstlisting}[language=Python, gobble=0]
+# Import NumPy
+import numpy as np
+
+# Create Array
+arr = np.array([1, 2, 3])
+
+# Create Zeros, Ones, and Identity Matrix
+zeros = np.zeros((3, 3))
+ones = np.ones((3, 3))
+identity = np.eye(3)
+
+# Create Range and Space
+range_arr = np.arange(0, 10, 2)
+space_arr = np.linspace(0, 10, 5)
+
+# Random Numbers
+random_arr = np.random.rand(3, 3)
+random_int = np.random.randint(0, 10, (3, 3))
+
+# Array Shape and Reshape
+shape = arr.shape
+reshaped = arr.reshape((3, 1))
+
+# Indexing and Slicing
+first_element = arr[0]
+slice_elements = arr[0:2]
+
+# Basic Operations (+, -, *, /)
+sum_arr = arr + arr
+diff_arr = arr - arr
+prod_arr = arr * arr
+div_arr = arr / arr
+
+# Aggregation Functions
+sum_all = np.sum(arr)
+mean_all = np.mean(arr)
+max_all = np.max(arr)
+
+# Boolean Masking
+mask = (arr > 1)
+filtered = arr[mask]
+
+# Matrix Operations
+dot_product = np.dot(arr, arr)
+transpose = np.transpose(arr)
+
+\end{lstlisting}
+\end{sectionbox}
+
+\begin{sectionbox}
+\subsection{Re: Text Processing}
+\begin{lstlisting}[language=Python, gobble=0]
+# Import Libraries
+import re
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Basic String Operations
+text = "This is a sample text."
+lower_text = text.lower()
+upper_text = text.upper()
+split_text = text.split()
+
+# Regular Expressions
+email_extract = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', text)
+words_extract = re.findall(r'\w+', text)
+
+# Tokenization
+tokens = word_tokenize(text)
+
+# Remove Stopwords
+filtered_words = [word for word in tokens if word.lower() not in stopwords.words('english')]
+
+# Stemming
+stemmer = PorterStemmer()
+stemmed_words = [stemmer.stem(word) for word in filtered_words]
+
+# TF-IDF Vectorization
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform([text])
+
+# N-grams
+bigrams = [(tokens[i], tokens[i + 1]) for i in range(len(tokens) - 1)]
+
+\end{lstlisting}
+
+\end{sectionbox}
+
 % ======================================================================
 % End
 % ======================================================================
