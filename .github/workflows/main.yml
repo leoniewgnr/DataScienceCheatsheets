@@ -10,7 +10,7 @@ jobs:
     - name: Compile LaTeX document
       uses: xu-cheng/latex-action@v3
       with:
-        root_file: data_science_case.tex
+        root_file: cheat_sheets/data_science_case.tex
           
     - name: Upload PDF
       uses: actions/upload-artifact@v3
