@@ -11,11 +11,9 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: cheat_sheets/data_science_case.tex
-        # Add other options if necessary
 
     - name: Copy LaTeX4EI template files
-      run: cp -r cheat_sheets/latex4ei ./
-      # you may also add 'sudo mktexlsr' if necessary
+      run: cp -r cheat_sheets/latex4ei cheat_sheets/
 
     - name: Compile LaTeX document
       run: latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 cheat_sheets/data_science_case.tex
