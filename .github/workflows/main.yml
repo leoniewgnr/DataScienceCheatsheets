@@ -6,23 +6,22 @@ jobs:
     steps:
     - name: Set up Git repository
       uses: actions/checkout@v2
-      
+
     - name: Set up TeX Live
       uses: xu-cheng/latex-action@v2
       with:
-        root_file: data_science_case.tex
-        extra_packages: ngerman
+        root_file: cheat_sheets/data_science_case.tex
         # Add other options if necessary
 
     - name: Copy LaTeX4EI template files
       run: cp -r cheat_sheets/latex4ei ./
       # you may also add 'sudo mktexlsr' if necessary
-      
+
     - name: Compile LaTeX document
-      run: latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 data_science_case.tex
+      run: latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 cheat_sheets/data_science_case.tex
 
     - name: Upload PDF
       uses: actions/upload-artifact@v2
       with:
         name: data_science_case
-        path: ./data_science_case.pdf
+        path: ./cheat_sheets/data_science_case.pdf
