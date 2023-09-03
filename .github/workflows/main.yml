@@ -5,21 +5,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set up Git repository
-      uses: actions/checkout@v2
-
-    - name: Set up TeX Live
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: cheat_sheets/data_science_case.tex
+      uses: actions/checkout@v3
 
     - name: Copy LaTeX4EI template files
-      run: cp -r cheat_sheets/latex4ei cheat_sheets/
+      run: sudo cp -r cheat_sheets/latex4ei
+
+    - name: Update LaTeX filename database
+      run: sudo mktexlsr
 
     - name: Compile LaTeX document
-      run: latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 cheat_sheets/data_science_case.tex
-
+      uses: xu-cheng/latex-action@v3
+      with:
+        root_file: data_science_case.tex
+          
     - name: Upload PDF
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: data_science_case
         path: ./cheat_sheets/data_science_case.pdf
