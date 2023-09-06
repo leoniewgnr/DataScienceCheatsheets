@@ -6,6 +6,11 @@ Hello there! 👋 Welcome to your ultimate resource for acing that Data Science 
 
 ### 1️⃣ Data Science Business Case Cheat Sheet
 This is your step-by-step guide to solving business case scenarios as you'd encounter in a case interview. It's structured just like a typical case interview but with additional details on ML models. Handy for consulting interviews or any situation where understanding the business context is key.
+Parts of this sheet were inspired by [Aaron Wang](https://github.com/aaronwangy/Data-Science-Cheatsheet/tree/main). Thanks for your helpful sheet!
+
+Future sections
+* RNN
+* CNN
 
 ### 2️⃣ Data Science Code Cheat Sheet
 Ever get stuck on syntax during a coding interview? This cheat sheet lays out the most important commands you'll need to analyze data with Python.
