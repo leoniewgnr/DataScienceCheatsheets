@@ -17,6 +17,7 @@
 
 % additional packages
 \DeclareTextFontCommand{\emph}{\bfseries}
+\usepackage{multirow} % for tables
 
 % set document information
 \title{How to Ace the Data Science Case Interview }
@@ -158,18 +159,21 @@ Interpret- ability & High & Medium \\
 \textbf{Mean Squared Error (MSE)} $\frac{1}{n}\sum (y_i - \hat{y_i})^2$\\
 \textbf{Sum of Squared Errors (SSE)} $\sum (y_i - \hat{y_i})$\\
 \textbf{Total Sum of Squares (SST)} $\sum (y_i - \overline{y_i})$\\
+\textbf{$R^2$ Score}: $1-\frac{SSE}{SST}$ ratio of explained variability in the data, not valid for nonlinear models, <0: worse than predicting just the mean \\
 
-\subsubsection{Metrics}
+\subsubsection{Classification}
 \textbf{Accuracy}: Ratio of correct predictions to the total number of predictions. BUT: problem with imbalanced classes $\rightarrow$ good for classification problems with balanced classes\\
 \textbf{Precision}: $\frac{TP}{TP+FP}$ $\rightarrow$ideal if no FP (Spam detection: negative/no-spam mail is detected as positive/spam)\\
 \textbf{Recall (TPR)}: $\frac{TP}{TP+FN}$ $\rightarrow$ ideal if no FN (Disease detection: positive/sick patient is detected as healthy/negative)\\
 \textbf{F1-Score}: $2\frac{\text{precision} * \text{recall}}{\text{precision} + \text{recall}}$ $\rightarrow$ for imbalanced classes\\
 \textbf{ROC-AUC}: Plot TPR vs FPR for different classification thresholds, aread under the curve = how likely the model differentiates positives vs negatives (1: perfect classification, 0.5: like random), not dependent on threshold, not always interpretable\\
-\textbf{$R^2$ Score}: $1-\frac{SSE}{SST}$ ratio of explained variability in the data, not valid for nonlinear models \\
 
-
-% Image is included as a placeholder
-\includegraphics[width=0.5\textwidth]{cheat_sheets/img/confusion.jpeg}
+\begin{tablebox}{lllll}
+ &  & \multicolumn{2}{l}{\emph{Actual}} &  \\ \cline{3-4}
+ &  & \multicolumn{1}{l|}{Positive} & Negative &  \\ \cline{3-4}
+\multicolumn{1}{l|}{\multirow{2}{*}{\emph{Prediction}}} & \multicolumn{1}{l|}{Positive} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}TP\\ Correct as positive\end{tabular}} & \begin{tabular}[c]{@{}l@{}}FP\\ Incorrect as positive\end{tabular} &  \\ \cline{2-4}
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{Negative} & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}FN\\ Incorrect as negative\end{tabular}} & \begin{tabular}[c]{@{}l@{}}TN\\ Correct as negative\end{tabular} & 
+\end{tablebox}
 
 \end{sectionbox}
 
@@ -200,8 +204,17 @@ Interpret- ability & High & Medium \\
     \textbf{Ethics and Compliance}: Understanding and adhering to legal and ethical guidelines (e.g., GDPR).
     
 \subsection{Model Management}
-    \textbf{Model Tracking (e.g., MLflow)}: Tracking experiments, models, and metrics.\\
-    \textbf{A/B Testing}: Comparing model versions to select the best.\\
+    \subsubsection{Model Tracking (e.g., MLflow)} 
+    Tracking experiments, models, and metrics.
+    \subsubsection{A/B Testing}
+    Comparing model versions to select the best.
+    \paragraph{Procedure}
+    \begin{enumerate}
+        \item Randomly split the traffic (or data) into two groups: one served by model A and the other by model B.
+        \item Measure the performance metric of interest (e.g., conversion rate, click-through rate, etc.) for both groups.
+        \item Use statistical hypothesis testing to determine if the difference in performance is statistically significant.
+    \end{enumerate}
+
 \end{sectionbox}
 
 \section{Machine Learning Models}
@@ -322,7 +335,19 @@ No single equation represents a decision tree. They are built using algorithms l
     \item Max Depth: Maximum depth of tree.
     \item Min Samples Split: Minimum number of samples required to split an internal node.
     \item Min Samples Leaf: Minimum number of samples required to be at a leaf node.
-    \item Criterion: Metric used for splitting (Gini, Entropy).
+    \item Criterion: Metric used for splitting (Gini, Entropy)
+    \begin{itemize}
+        \item \textbf{Gini Impurity} (\( Gini = 1 - \sum_{i=1}^{n} p(i)^2 \)): 
+            \begin{itemize}
+                \item Formula: Gini impurity measures the disorder of a set. The lower the Gini impurity, the better.
+                \item Benefits: Faster to compute and works well in practice.
+            \end{itemize}
+        \item \textbf{Cross-Entropy} (\( H = -\sum_{i=1}^{n} p(i) \log(p(i)) \)):
+            \begin{itemize}
+                \item Formula: Cross-Entropy measures the dissimilarity between the distribution of observations and the distribution of predicted probabilities.
+                \item Benefits: Tends to distribute error more evenly compared to Gini.
+            \end{itemize}
+    \end{itemize}
 \end{itemize}
 
 \subsubsection{Use-cases}
@@ -508,7 +533,7 @@ An unsupervised learning technique for partitioning data into clusters based on 
     \item Spherical Clusters: Assumes clusters to be spherical and equally sized.
 \end{itemize}
 
-\subsubsection{Equation}
+\subsubsection{Architecture}
 Objective is to minimize the sum of squared distances from each point to its cluster centroid.
 
 \[
@@ -516,6 +541,30 @@ J = \sum_{i=1}^{k} \sum_{x \in C_i} \|x - \mu_i\|^2
 \]
 
 where \(J\) is the objective function, \(C_i\) is the \(i^{th}\) cluster, and \(\mu_i\) is the centroid of \(C_i\).
+
+\paragraph{K-Means}
+\begin{enumerate}
+    \item Initialize \( k \) cluster centroids randomly or based on some criterion.
+    \item Assign each data point to the nearest centroid, and it becomes a member of that cluster.
+    \item Recalculate the centroid of each cluster as the mean vector of all points in the cluster.
+    \item Repeat steps 2-3 until convergence or a set number of iterations.
+\end{enumerate}
+
+\paragraph{K-Means++}
+\begin{enumerate}
+    \item Choose one centroid uniformly at random from the data points.
+    \item For each data point, compute its distance to the nearest, already chosen centroid.
+    \item Select the next centroid from the remaining data points with probability proportional to the square of the distance calculated in the previous step.
+    \item Repeat steps 2-3 until \( k \) centroids are chosen.
+    \item Proceed with steps 2-4 of the standard K-Means algorithm.
+\end{enumerate}
+
+\subsubsection{K-Means vs K-Means++}
+\begin{itemize}
+    \item \textbf{Initialization}: K-Means++ provides a smarter initialization than the random initialization in K-Means.
+    \item \textbf{Convergence}: K-Means++ often requires fewer iterations to converge, resulting in performance improvements.
+    \item \textbf{Quality}: K-Means++ generally produces clusters with lower intra-cluster variance compared to K-Means.
+\end{itemize}
 
 \subsubsection{Training Parameters}
 \begin{itemize}
@@ -550,6 +599,59 @@ High; centroids and clusters can be easily examined, but interpretation can be s
 
 \includegraphics[width=0.9\linewidth]{2880px-ClusterAnalysis_Mouse.svg.png}
 \end{sectionbox}
+
+\begin{sectionbox}
+\subsection{Hierarchical Clustering}
+A clustering algorithm that builds a hierarchy of clusters by either successively merging smaller clusters into larger ones (Agglomerative), or recursively dividing larger clusters into smaller ones (Divisive).
+
+\subsubsection{Assumptions}
+\begin{itemize}
+    \item No assumptions about the shape or size of the clusters.
+    \item Proximity Measures: Various distance metrics can be used (e.g., Euclidean, Manhattan).
+\end{itemize}
+
+\subsubsection{Linkage Criteria}
+Defines the rule for calculating distance between clusters.
+\begin{itemize}
+    \item Single Linkage: Minimum distance between clusters.
+    \item Complete Linkage: Maximum distance between clusters.
+    \item Average Linkage: Average distance between clusters.
+    \item Ward's Method: Minimizes the total within-cluster variance.
+\end{itemize}
+
+\subsubsection{Algorithm Steps}
+\begin{enumerate}
+    \item Start with each data point as a single cluster.
+    \item Merge the closest pair of clusters based on linkage criteria.
+    \item Update the distance matrix.
+    \item Repeat steps 2-3 until only one cluster remains.
+\end{enumerate}
+
+\subsubsection{Use-cases}
+\begin{itemize}
+    \item Phylogenetic analysis
+    \item Market segmentation
+    \item Document clustering
+\end{itemize}
+
+\begin{tablebox}{p{0.4\textwidth} p{0.55\textwidth}}
+\emph{Strengths} & \emph{Weaknesses} \\ \cmrule
+No need to specify number of clusters & Computationally expensive \\
+Suitable for non-spherical clusters & Sensitive to choice of linkage criteria \\
+Produces a dendrogram, useful for interpretation & No objective way to decide number of clusters \\
+\end{tablebox}
+
+\subsubsection{Data Preprocessing}
+\begin{itemize}
+    \item Feature scaling: Often necessary due to distance metrics.
+    \item Missing values: Should be treated carefully.
+\end{itemize}
+
+\subsubsection{Interpretability}
+High; the dendrogram provides a visual representation and can help understand the nested cluster structure, but choosing the right number of clusters can be subjective.
+
+\end{sectionbox}
+
 
 \begin{sectionbox}
 \subsection{Neural Networks}
@@ -591,6 +693,46 @@ where \( h \) is the output, \( \sigma \) is the activation function, \( W \) is
 Highly flexible & Requires large data sets \\
 Good for complex tasks & Computationally intensive \\
 Self-learning features & Difficult to interpret \\
+\end{tablebox}
+
+\subsubsection{Gradient Descent}
+
+An optimization algorithm for minimizing the cost function \( J(\theta) \) iteratively.
+
+\paragraph{Steps}
+\begin{enumerate}
+    \item \textbf{Initialize Weights}: Randomly initialize model weights \( \theta \).
+    \item \textbf{Compute Gradient}: Calculate the gradient \( \nabla J(\theta) \) of the cost function with respect to the weights.
+    \[
+    \nabla J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \nabla J_i(\theta)
+    \]
+    \item \textbf{Update Weights}: Update the weights in the opposite direction of the gradient.
+    \[
+    \theta = \theta - \alpha \nabla J(\theta)
+    \]
+    where \( \alpha \) is the learning rate.
+\end{enumerate}
+
+\subsubsection{Stochastic Gradient Descent (SGD)}
+
+A variant of gradient descent that updates weights after each training example.
+
+\paragraph{Steps}
+\begin{enumerate}
+    \item \textbf{Initialize Weights}: Randomly initialize model weights \( \theta \).
+    \item \textbf{Randomize Data}: Shuffle the training dataset.
+    \item \textbf{Compute \& Update}: For each training example \( x_i \), compute the gradient \( \nabla J_i(\theta) \) and immediately update \( \theta \).
+    \[
+    \theta = \theta - \alpha \nabla J_i(\theta)
+    \]
+\end{enumerate}
+
+\subsubsection{Comparative Analysis}
+\begin{tablebox}{p{0.4\textwidth} p{0.55\textwidth}}
+\emph{Strengths} & \emph{Weaknesses} \\ \cmrule
+Fast updates & Noisy updates \\
+Good for large datasets & May not converge to global minimum \\
+Efficient in terms of memory & Sensitive to learning rate \\
 \end{tablebox}
 
 \subsubsection{Data Preprocessing}
@@ -652,37 +794,39 @@ High; easily understandable probabilities and strong assumptions make the model 
 \end{sectionbox}
 
 \begin{sectionbox}
-\subsection{ARIMA}
+\subsection{Time Series Forecasting}
+Using historical data points to predict future observations.
 
-AutoRegressive Integrated Moving Average (ARIMA) is a popular time-series forecasting method.
+\subsubsection{Characteristics}
+\paragraph{Stationarity} Statistical properties like mean and variance are constant over time, often a key issue in time series forecasting.
 
-\subsubsection{Assumptions}
+\paragraph{Seasonality} Patterns that repeat at known intervals (e.g., daily, monthly, annually).
+
+\paragraph{Trend} The underlying trend in the data. Can be upward, downward, or stable.
+
+\paragraph{Cycles} Long-term oscillations driven by economic conditions. Unlike seasonality, the duration is unpredictable.
+
+\paragraph{Autocorrelation} The correlation of a series with its own lags.
+
+\subsubsection{Common Methods}
+\paragraph{Exponential Smoothing}
+A weighted average method that considers the most recent observations to be more relevant. The simplest form is Simple Exponential Smoothing for univariate time series without trend and seasonality.
+
+\paragraph{ARIMA (AutoRegressive Integrated Moving Average)}
+A linear equation that utilizes time-lagged values, lagged forecast errors, and a trend component. Used for non-seasonal time series data.
+
+\textbf{Assumptions:}
 \begin{itemize}
     \item Stationarity: Assumes the data is stationary or can be made stationary through differencing.
     \item Linearity: Assumes a linear relationship between lagged variables.
 \end{itemize}
 
-\subsubsection{Equation}
+\textbf{Equation}
 The ARIMA model can be represented as ARIMA\((p, d, q)\), where \(p\) is the AR term, \(d\) is the number of differencing required to make the series stationary, and \(q\) is the MA term.
 
 \[
 (1 - \Phi_{1}B - \ldots - \Phi_{p}B^{p}) (1 - B)^{d} Y_{t} = (1 + \theta_{1}B + \ldots + \theta_{q}B^{q}) \epsilon_{t}
 \]
-
-\subsubsection{Training Parameters}
-\begin{itemize}
-    \item \(p\): Number of AR (AutoRegressive) terms.
-    \item \(d\): Order of differencing.
-    \item \(q\): Number of MA (Moving Average) terms.
-\end{itemize}
-
-\subsubsection{Use-cases}
-\begin{itemize}
-    \item Stock price forecasting
-    \item Sales prediction
-    \item Weather forecasting
-\end{itemize}
-
 \begin{tablebox}{p{0.4\textwidth} p{0.55\textwidth}}
 \emph{Strengths} & \emph{Weaknesses} \\ \cmrule
 Effective for univariate time-series & Sensitive to parameter choices \\
@@ -690,16 +834,266 @@ Handles seasonality with SARIMA & Requires stationary data \\
 Good interpretability & Complexity increases with parameters \\
 \end{tablebox}
 
+\paragraph{SARIMA (Seasonal ARIMA)}
+An extension of ARIMA that explicitly models seasonality. Useful for time series with seasonal components.
+
+\paragraph{Prophet}
+An open-source forecasting tool designed for business forecast tasks, providing intuitive parameters to handle trends, seasonality, and holidays.
+
+\subsubsection{Use-cases}
+\begin{itemize}
+    \item Stock price forecasting
+    \item Sales prediction
+    \item Weather forecasting
+\end{itemize}
+\end{sectionbox}
+
+\section{Statistics}
+\begin{sectionbox}
+\subsection{Descriptive Statistics}
+Basic metrics to understand data distributions:
+\begin{itemize}
+    \item Mean: \(\bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i\)
+    \item Median: Middle value in a sorted list
+    \item Mode: Most frequently occurring value
+    \item Variance: \(\sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \bar{x})^2\)
+    \item Standard Deviation: \(\sigma = \sqrt{\sigma^2}\)
+\end{itemize}
+
+\subsection{Inferential Statistics}
+Tools for making predictions and inferences from sampled data.
+\begin{itemize}
+    \item Confidence Interval: \( \text{CI} = \bar{x} \pm Z \left( \frac{\sigma}{\sqrt{N}} \right)\)
+    \item Hypothesis Testing: Using p-values and significance level (\(\alpha\)) to make decisions.
+\end{itemize}
+
+\subsection{Probability Distributions}
+Different types of data distributions:
+\begin{itemize}
+    \item Normal Distribution: \( f(x|\mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2/(2\sigma^2)} \)
+    \item Binomial Distribution: \( f(k, n, p) = C(n, k) p^k (1-p)^{(n-k)} \)
+    \item Poisson Distribution: \( P(x; \lambda) = \frac{\lambda^x e^{-\lambda}}{x!} \)
+\end{itemize}
+
+\subsubsection{Probability Formulas}
+\begin{itemize}
+    \item Probability: \( P(A) = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}} \)
+    \item Conditional Probability: \( P(A|B) = \frac{P(A \cap B)}{P(B)} \)
+    \item Bayes' Theorem: \( P(A|B) = \frac{P(B|A)P(A)}{P(B)} \)
+\end{itemize}
+\vspace{\baselineskip}
+\begin{itemize}
+    \item Expected Value: \( E(X) = \sum_{i=1}^{n} p(x_i) x_i \)
+    \item Variance: \( \text{Var}(X) = E(X^2) - [E(X)]^2 \)
+    \item Standard Deviation: \( \sigma = \sqrt{\text{Var}(X)} \)
+\end{itemize}
+\vspace{\baselineskip}
+\begin{itemize}
+    \item Covariance: \( \text{Cov}(X, Y) = \frac{1}{N} \sum_{i=1}^{N} (x_i - \bar{x})(y_i - \bar{y}) \)
+    \item Pearson Correlation Coefficient: \( r = \frac{\text{Cov}(X, Y)}{\sigma_x \sigma_y} \)
+\end{itemize}
+\end{sectionbox}
+
+
+\section{Other}
+\begin{sectionbox}
+\subsection{Multiclass Prediction}
+Output variable can take on more than two classes, aims to assign an observation to one of several classes. 
+
+\begin{itemize}
+    \item \textbf{One-vs-All (OvA)}: 
+    \begin{itemize}
+        \item \textit{Method}: For \(N\) classes, \(N\) separate binary classifiers are trained. Each one discriminates between one of the classes and the rest.
+        \item \textit{Advantages}: Simplicity and ease of implementation.
+    \end{itemize}
+    
+    \item \textbf{One-vs-One (OvO)}:
+    \begin{itemize}
+        \item \textit{Method}: For \(N\) classes, \( \binom{N}{2} \) classifiers are trained, one for each pair of classes.
+        \item \textit{Advantages}: Each classifier needs only to be trained on the subset of the data containing its two target classes, potentially providing more accurate results.
+    \end{itemize}
+
+    \item \textbf{Softmax Regression}:
+    \begin{itemize}
+        \item \textit{Method}: Generalizes logistic regression to multiple classes without requiring multiple binary classifiers.
+        \item \textit{Advantages}: Provides probabilities for each class, useful for interpretability.
+    \end{itemize}
+    
+    \item \textbf{Tree-based Methods}:
+    \begin{itemize}
+        \item \textit{Method}: Decision trees or ensemble methods like Random Forest can naturally handle multiclass classification.
+        \item \textit{Advantages}: Interpretability and handling of missing values.
+    \end{itemize}
+\end{itemize}
+
+\end{sectionbox}
+
+\begin{sectionbox}
+\subsection{Dimensionality Reduction}
+Techniques to reduce the number of features while preserving the underlying data structure. Useful for visualization, reducing noise, and improving model performance.
+
+\subsubsection{Principal Component Analysis (PCA)}
+\begin{itemize}
+    \item Objective: To find orthogonal axes (principal components) that maximize the variance.
+    \item Algorithm: Eigen-decomposition of the covariance matrix.
+    \item Use-cases: Image compression, visualization, feature extraction.
+\end{itemize}
+
+\paragraph{Steps}
+\begin{enumerate}
+    \item \textbf{Standardize Data}: Scale the data to have zero mean and unit variance.
+    \[
+    X_{\text{std}} = \frac{X - \mu}{\sigma}
+    \]
+    
+    \item \textbf{Compute Covariance Matrix}: Calculate the covariance matrix of the standardized data.
+    \[
+    \Sigma = \frac{1}{n} X_{\text{std}}^T X_{\text{std}}
+    \]
+    
+    \item \textbf{Eigenvalue Decomposition}: Calculate the eigenvalues and eigenvectors of the covariance matrix.
+    \[
+    \Sigma v = \lambda v
+    \]
+    
+    \item \textbf{Sort Eigenvalues}: Sort the eigenvalues in descending order and select the top \(k\) corresponding eigenvectors.
+    
+    \item \textbf{Projection}: Project the original data onto the lower-dimensional subspace.
+    \[
+    X_{\text{pca}} = X_{\text{std}} \times W
+    \]
+    where \(W\) is the matrix formed by the top \(k\) eigenvectors.
+\end{enumerate}
+
+\subsubsection{Linear Discriminant Analysis (LDA)}
+\begin{itemize}
+    \item Objective: To find a linear combination of features that maximizes the separation between different classes.
+    \item Algorithm: Maximizes the ratio of between-class variance to within-class variance.
+    \item Use-cases: Classification, feature extraction.
+\end{itemize}
+\paragraph{Steps}
+\begin{enumerate}
+    \item \textbf{Compute Class Means}: Calculate the mean vectors for each class.
+    \[
+    \mu_i = \frac{1}{n_i} \sum_{x \in C_i} x
+    \]
+    
+    \item \textbf{Within-class Scatter Matrix \(S_W\)}:
+    \[
+    S_W = \sum_{i=1}^{c} \sum_{x \in C_i} (x - \mu_i) (x - \mu_i)^T
+    \]
+    
+    \item \textbf{Between-class Scatter Matrix \(S_B\)}:
+    \[
+    S_B = \sum_{i=1}^{c} n_i (\mu_i - \mu) (\mu_i - \mu)^T
+    \]
+    where \(\mu\) is the overall mean.
+    
+    \item \textbf{Eigenvalue Decomposition}: Solve the generalized eigenvalue problem for \(S_W^{-1} S_B\).
+    \[
+    S_W^{-1} S_B v = \lambda v
+    \]
+    
+    \item \textbf{Sort Eigenvalues}: Sort the eigenvalues in descending order and select the top \(k\) corresponding eigenvectors.
+    
+    \item \textbf{Projection}: Project the original data onto the lower-dimensional subspace.
+    \[
+    X_{\text{lda}} = X \times W
+    \]
+    where \(W\) is the matrix formed by the top \(k\) eigenvectors.
+\end{enumerate}
+\end{sectionbox}
+
+\begin{sectionbox}
+\subsubsection{Factor Analysis}
+\begin{itemize}
+    \item Objective: To model observed variables as linear combinations of latent variables and error terms.
+    \begin{equation*}
+    \begin{array}{c}
+    \underset{\mathrm{p \times n}}{
+        \overset{\text{data}}{
+            \left[
+            \begin{array}{l}
+            \textcolor{red}{\text{math scores}} \\
+            \textcolor{blue}{\text{reading scores}} \\
+            \textcolor{green}{\text{science scores}}
+            \end{array}
+            \right]
+        }
+    }
+    =
+    \underset{\mathrm{p \times k}}{
+        \overset{\text{factor loadings}}{
+            \left[
+            \begin{array}{rr}
+            \textcolor{purple}{.13} & \textcolor{cyan}{.95} \\
+            \textcolor{purple}{.78} & \textcolor{cyan}{-.28} \\
+            \textcolor{purple}{-.87} & \textcolor{cyan}{.05}
+            \end{array}
+            \right]
+        }
+    }
+    \underset{\mathrm{k \times n}}{
+        \overset{\text{common factors}}{
+            \left[
+            \begin{array}{cccc}
+            \textcolor{purple}{-1.25} & \textcolor{purple}{1.88} & \ldots & \textcolor{purple}{-0.55} \\
+            \textcolor{cyan}{0.71} & \textcolor{cyan}{-0.17} & \ldots & \textcolor{cyan}{-1.20}
+            \end{array}
+            \right]
+        }
+    } \\
+    \end{array}
+    \end{equation*}
+
+    \item Algorithm: Factor loadings are estimated through methods like maximum likelihood.
+    \item Use-cases: Psychology tests, market research, gene expression data.
+\end{itemize}
+
+\begin{tablebox}{p{0.4\textwidth} p{0.55\textwidth}}
+\emph{Strengths} & \emph{Weaknesses} \\ \cmrule
+Reduces overfitting & Loss of interpretability \\
+Speeds up training & Assumes linear relationships \\
+Improves model generalization & May lose important features \\
+\end{tablebox}
+
 \subsubsection{Data Preprocessing}
 \begin{itemize}
-    \item Seasonal decomposition: For seasonal data.
-    \item Differencing: To achieve stationarity.
+    \item Feature scaling: Mandatory for most algorithms due to distance computation.
+    \item Handling missing values: Impute or remove rows/columns.
 \end{itemize}
 
 \subsubsection{Interpretability}
-Moderate; understanding the parameters and their impact on the time series provides some level of interpretability.
+Medium; interpreting reduced dimensions may be non-intuitive but techniques like loading plots can help.
 
 \end{sectionbox}
+
+\begin{sectionbox}
+\subsection{Hypothesis Testing in A/B Testing}
+\subsubsection{Steps}
+\begin{enumerate}
+    \item \textbf{Null Hypothesis (\(H_0\))}: Assume that there is no difference between the performance of model A and model B.
+    \item \textbf{Alternative Hypothesis (\(H_a\))}: Assume that there is a significant difference between the performance of model A and model B.
+    \item \textbf{Choose Significance Level (\(\alpha\))}: Commonly set at 0.05, implying a 95\% confidence level.
+    \item \textbf{Collect Data}: Record the performance metric for both groups over a set period.
+    \item \textbf{Calculate Test Statistic}: This could be a t-statistic, z-score, etc., depending on the data distribution.
+    \item \textbf{Compute P-value}: The probability of observing the data if the null hypothesis were true.
+    \item \textbf{Draw Conclusions}:
+    \begin{itemize}
+        \item If \( p \leq \alpha \), reject the null hypothesis. This suggests that the difference in performance is statistically significant.
+        \item If \( p > \alpha \), fail to reject the null hypothesis. This suggests that the difference in performance is not statistically significant.
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Important Notes}
+\begin{itemize}
+    \item A smaller p-value suggests stronger evidence against the null hypothesis.
+    \item Rejecting the null hypothesis does not prove the alternative hypothesis; it only suggests that the alternative hypothesis is more likely.
+    \item Hypothesis testing only indicates if a difference exists, not the magnitude of the difference.
+\end{itemize}
+
+\end{sectionbox}
+
 % ======================================================================
 % End
 % ======================================================================
