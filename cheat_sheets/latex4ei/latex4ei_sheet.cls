@@ -43,7 +43,7 @@
 	\def\baseclass{scrartcl}
 
 	% set default options for base class
-	\PassOptionsToClass{6pt, a4paper, landscape}{\baseclass}
+	\PassOptionsToClass{7pt, a4paper, landscape}{\baseclass}
 
 % forward unknown options to class
 % ----------------------------------------------------------------------
@@ -85,7 +85,7 @@
 		% start multicolumn
 		\AtBeginDocument{
 		    \begin{multicols*}{\value{columnnumber}}
-		}
+            }
 		\AtEndDocument{
 			\label{LastPage}
 			\end{multicols*}

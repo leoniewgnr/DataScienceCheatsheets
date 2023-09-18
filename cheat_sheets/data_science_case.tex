@@ -652,6 +652,53 @@ High; the dendrogram provides a visual representation and can help understand th
 
 \end{sectionbox}
 
+\begin{sectionbox}
+\subsection{Naive Bayes}
+
+Probabilistic classifiers based on Bayes' theorem, with strong independence assumptions between features.
+
+\subsubsection{Assumptions}
+\begin{itemize}
+    \item Conditional Independence: Assumes that features are conditionally independent given the class label.
+    \item Prior Probability: Requires an estimate of the prior probability of each class.
+\end{itemize}
+
+\subsubsection{Equation}
+The posterior probability for a class \( C \) given features \( x_1, x_2, \ldots, x_n \) is:
+\[
+P(C|x_1, x_2, \ldots, x_n) \propto P(C) \prod_{i=1}^{n} P(x_i|C), 
+\]
+where $P(C)$ is the prior of class C and $P(x_i|C)$ the likelihood
+
+\subsubsection{Training Parameters}
+\begin{itemize}
+    \item Smoothing: Additive smoothing (Laplace or Lidstone).
+    \item Feature Type: Multinomial, Gaussian, or Bernoulli.
+\end{itemize}
+
+\subsubsection{Use-cases}
+\begin{itemize}
+    \item Spam filtering
+    \item Sentiment analysis
+    \item Document classification
+\end{itemize}
+
+\begin{tablebox}{p{0.4\textwidth} p{0.55\textwidth}}
+\emph{Strengths} & \emph{Weaknesses} \\ \cmrule
+Simple and fast & Assumes feature independence \\
+Works well with high dimensions & Sensitive to irrelevant features \\
+Effective with small data & Limited to categorical data \\
+\end{tablebox}
+
+\subsubsection{Data Preprocessing}
+\begin{itemize}
+    \item Feature selection: Useful to remove irrelevant features.
+    \item Data transformation: Often required for Gaussian Naive Bayes.
+\end{itemize}
+
+\subsubsection{Interpretability}
+High; easily understandable probabilities and strong assumptions make the model interpretable.
+\end{sectionbox}
 
 \begin{sectionbox}
 \subsection{Neural Networks}
@@ -743,54 +790,6 @@ Efficient in terms of memory & Sensitive to learning rate \\
 
 \subsubsection{Interpretability}
 Low; often considered as "black-box" models due to their complex structure.
-\end{sectionbox}
-
-\begin{sectionbox}
-\subsection{Naive Bayes}
-
-Probabilistic classifiers based on Bayes' theorem, with strong independence assumptions between features.
-
-\subsubsection{Assumptions}
-\begin{itemize}
-    \item Conditional Independence: Assumes that features are conditionally independent given the class label.
-    \item Prior Probability: Requires an estimate of the prior probability of each class.
-\end{itemize}
-
-\subsubsection{Equation}
-The posterior probability for a class \( C \) given features \( x_1, x_2, \ldots, x_n \) is:
-\[
-P(C|x_1, x_2, \ldots, x_n) \propto P(C) \prod_{i=1}^{n} P(x_i|C), 
-\]
-where $P(C)$ is the prior of class C and $P(x_i|C)$ the likelihood
-
-\subsubsection{Training Parameters}
-\begin{itemize}
-    \item Smoothing: Additive smoothing (Laplace or Lidstone).
-    \item Feature Type: Multinomial, Gaussian, or Bernoulli.
-\end{itemize}
-
-\subsubsection{Use-cases}
-\begin{itemize}
-    \item Spam filtering
-    \item Sentiment analysis
-    \item Document classification
-\end{itemize}
-
-\begin{tablebox}{p{0.4\textwidth} p{0.55\textwidth}}
-\emph{Strengths} & \emph{Weaknesses} \\ \cmrule
-Simple and fast & Assumes feature independence \\
-Works well with high dimensions & Sensitive to irrelevant features \\
-Effective with small data & Limited to categorical data \\
-\end{tablebox}
-
-\subsubsection{Data Preprocessing}
-\begin{itemize}
-    \item Feature selection: Useful to remove irrelevant features.
-    \item Data transformation: Often required for Gaussian Naive Bayes.
-\end{itemize}
-
-\subsubsection{Interpretability}
-High; easily understandable probabilities and strong assumptions make the model interpretable.
 \end{sectionbox}
 
 \begin{sectionbox}
