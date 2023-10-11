@@ -18,7 +18,6 @@
 
 	\DeclareOption{color}{\colortrue}
 	\DeclareOption{nocolor}{\colorfalse}
-	\DeclareOption{german}{\def\thelanguage{ngerman}}
 	\DeclareOption{english}{\def\thelanguage{english}}
 
 	\ProcessOptions\relax
@@ -144,7 +143,7 @@
 % Language
 % ----------------------------------------------------------------------
 
-	\RequirePackage[english, ngerman]{babel}
+	\RequirePackage[english]{babel}
 
 	\RequirePackage{iflang}
 	\providecommand{\EngGer}[2]{\IfLanguageName{english}{#1}{#2}}
