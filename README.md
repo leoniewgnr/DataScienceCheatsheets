@@ -1,7 +1,3 @@
-Sure, here's an updated README to include your third cheat sheet:
-
----
-
 # Data Science Interview Cheat Sheets 📚💻📈
 
 Hello there! 👋 Welcome to your ultimate resource for acing that Data Science interview! This repo has got you covered from business case scenarios to hands-on coding tasks. Whether you're a newbie or a seasoned data scientist, you'll find something useful here.
