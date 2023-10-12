@@ -4,7 +4,7 @@ Hello there! 👋 Welcome to your ultimate resource for acing that Data Science 
 
 ## What's Inside? 📦
 
-### 1️⃣ Data Science Business Case Cheat Sheet
+### 1️⃣ [Data Science Business Case Cheat Sheet](https://github.com/leoniewgnr/DataScienceCheatsheets/blob/build/data_science_case.pdf)
 This is your step-by-step guide to solving business case scenarios as you'd encounter in a case interview. It's structured just like a typical case interview but with additional details on ML models. Handy for consulting interviews or any situation where understanding the business context is key.
 Parts of this sheet were inspired by [Aaron Wang](https://github.com/aaronwangy/Data-Science-Cheatsheet/tree/main). Thanks for your helpful sheet!
 
@@ -12,10 +12,10 @@ Parts of this sheet were inspired by [Aaron Wang](https://github.com/aaronwangy/
 * RNN
 * CNN
 
-### 2️⃣ Data Science Code Cheat Sheet
+### 2️⃣ [Data Science Code Cheat Sheet](https://github.com/leoniewgnr/DataScienceCheatsheets/blob/build/data_science_coding.pdf)
 Ever get stuck on syntax during a coding interview? This cheat sheet lays out the most important commands you'll need to analyze data with Python.
 
-### 3️⃣ Computer Science Algorithms Cheat Sheet
+### 3️⃣ [Computer Science Algorithms Cheat Sheet](https://github.com/leoniewgnr/DataScienceCheatsheets/blob/build/algorithms_coding.pdf)
 This sheet is perfect for brushing up on sorting, searching, and data structures like linked lists and trees. Whether you're facing a tough coding challenge or tackling graph-related problems, this sheet has got you covered.
 
 #### Topics included:
