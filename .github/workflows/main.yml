@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DIR: cheat_sheets
-      FILE: data_science_case
+      FILES: "algorithms_coding.tex data_science_case.tex data_science_coding.tex"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -13,13 +13,17 @@ jobs:
         run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super
       - name: LaTeX compile
         working-directory: ${{ env.DIR }}
-        run: pdflatex ${{ env.FILE }}; pdflatex ${{ env.FILE }};  # Removed bibtex
+        run: |
+          for FILE in ${{ env.FILES }}; do
+            pdflatex "$FILE"
+            pdflatex "$FILE"
+          done
       - name: move
-        run: mkdir -p github_artifacts && mv ${{ env.DIR }}/${{ env.FILE }}.pdf ./github_artifacts/
+        run: mkdir -p github_artifacts && mv ${{ env.DIR }}/*.pdf ./github_artifacts/
       - name: Upload pdf as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.FILE }}.pdf
+          name: compiled_pdfs
           path: ./github_artifacts
   deploy:
     needs: [paper]
