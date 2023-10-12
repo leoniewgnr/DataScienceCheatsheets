@@ -46,8 +46,7 @@
 \begin{symbolbox}
 Steps 1-4 are the steps to follow in a case interview. Step 5 gives more details on ML models.
 \end{symbolbox}
-    Define the business problem clearly: Take notes, repeat the problem and ask questions.\\
-    Structure 
+    Define the business problem clearly: Take notes, repeat the problem and ask questions. 
 \end{sectionbox}
 
 \section{Data Collection and Preparation}
@@ -98,13 +97,13 @@ Steps 1-4 are the steps to follow in a case interview. Step 5 gives more details
 Bias: learn the wrong relationship\\
 Variance: learns random relations that do not correlate with the data
 
-\includegraphics[width=0.5\textwidth]{img/biasvariance.png}
-\includegraphics[width=0.5\textwidth]{cheat_sheets/img/biasmatrix.png}
+\includegraphics[width=0.45\textwidth]{img/biasvariance.png}
+\includegraphics[width=0.45\textwidth]{img/biasmatrix.png}
 
 \textbf{Cross-Validation:} Technique for avoiding overfitting by splitting the data into multiple folds.
 
 \subsection{Model Development}
-\textbf{Feature Engineering}: Selection and transformation of features to improve model performance.\\
+\textbf{Feature Engineering}: Selection and transf. of features to improve performance.\\
 \textbf{Hyperparameter Tuning}: Optimization of parameters that are not learned from the data (e.g., Learning Rate).\\
 \textbf{Ensemble Learning}: Combining multiple models to improve accuracy (e.g., Random Forest, Bagging, Boosting).\\
 \textbf{Regularization}: Techniques to avoid overfitting (e.g., L1/L2 regularization).\\
@@ -125,7 +124,9 @@ Params & Learning rate, Regularization & Learning rate, Regularization & Depth, 
 Metric & RMSE, MAE & Accuracy, F1 & Accuracy, RMSE & Accuracy, RMSE \\
 Interpret- ability & High & High & Medium & Medium \\
 \end{tablebox}
+\end{sectionbox}
 
+\begin{sectionbox}
 \begin{tablebox}{>\raggedright p{0.1\linewidth} >\raggedright p{0.19\linewidth} p{0.19\linewidth} p{0.19\linewidth} p{0.19\linewidth}}
 & \emph{SVM} & \emph{K-NN} & \emph{K-Means} & \emph{Neural Networks} \\ \cmrule
 Type & Supervised & Supervised & Unsupervised & Supervised \\
@@ -138,7 +139,9 @@ Params & C, Kernel & Number of neighbors & Number of clusters & Learning rate, N
 Metric & Accuracy, F1 & Accuracy, RMSE & Silhouette Score, Inertia & Accuracy, F1 \\
 Interpret- ability & Low & High & Medium & Low \\
 \end{tablebox}
+\end{sectionbox}
 
+\begin{sectionbox}
 \begin{tablebox}{>\raggedright p{0.1\linewidth} >\raggedright p{0.39\linewidth} p{0.39\linewidth}}
 & \emph{Naive Bayes} & \emph{ARIMA} \\ \cmrule
 Type & Supervised & Supervised \\
@@ -266,7 +269,7 @@ Works well on small datasets & Cannot handle multicollinearity (independent vari
 \subsubsection{Interpretability}
 High; coefficients represent the change in the dependent variable for a one-unit change in an independent variable.
 
-\includegraphics[width=0.6\linewidth]{cheat_sheets//img/linear-regression-f-statistics-definition.jpg}
+\includegraphics[width=0.6\linewidth]{img/linear-regression-f-statistics-definition.jpg}
 \end{sectionbox}
 
 \begin{sectionbox}
@@ -314,7 +317,7 @@ Can provide calibrated probabilities & Prone to underfitting \\
 \subsubsection{Interpretability}
 Coefficients signify the odds ratio for the given predictor variable. A coefficient greater than 1 represents increased odds of the outcome, while a coefficient less than 1 represents decreased odds.
 
-\includegraphics[width=0.5\linewidth]{cheat_sheets//img/logistic-regression-in-machine-learning.png}
+\includegraphics[width=0.5\linewidth]{img/logistic-regression-in-machine-learning.png}
 \end{sectionbox}
 
 \begin{sectionbox}
@@ -374,7 +377,7 @@ No assumptions about data & Not suitable for unstructured data like images, text
 \subsubsection{Interpretability}
 High; each node represents a decision based on one attribute, and the path from root to leaf gives the reasoning for the final decision.
 
-\includegraphics[width=0.5\linewidth]{cheat_sheets//img/Decision-Trees-modified-1.png}
+\includegraphics[width=0.5\linewidth]{img/Decision-Trees-modified-1.png}
 \end{sectionbox}
 
 \begin{sectionbox}
@@ -473,8 +476,8 @@ Handles non-linear data well & Difficult to interpret \\
 \subsubsection{Interpretability}
 Low; the model parameters are hard to interpret in the context of the data, especially for non-linear kernels.
 
-\includegraphics[width=0.3\linewidth]{cheat_sheets//img/1280px-SVM_margin.png}
-\includegraphics[width=0.5\linewidth]{GbW5S.png}
+\includegraphics[width=0.3\linewidth]{img/1280px-SVM_margin.png}
+\includegraphics[width=0.5\linewidth]{img/GbW5S.png}
 \end{sectionbox}
 
 \begin{sectionbox}
@@ -558,7 +561,9 @@ where \(J\) is the objective function, \(C_i\) is the \(i^{th}\) cluster, and \(
     \item Repeat steps 2-3 until \( k \) centroids are chosen.
     \item Proceed with steps 2-4 of the standard K-Means algorithm.
 \end{enumerate}
+\end{sectionbox}
 
+\begin{sectionbox}
 \subsubsection{K-Means vs K-Means++}
 \begin{itemize}
     \item \textbf{Initialization}: K-Means++ provides a smarter initialization than the random initialization in K-Means.
