@@ -31,7 +31,8 @@ This sheet is perfect for brushing up on sorting, searching, and data structures
 I've crafted these cheat sheets using the LaTeX template from [latex4ei-packages](https://github.com/latex4ei/latex4ei-packages/tree/master). Big shoutout to them for providing an awesome template!
 
 ## How to Use? 🤔
-Fork to your account and connect with overleaf or download and upload ZIP to overleaf.
+Viewing: Click on title
+Editing: Fork to your account and connect with overleaf or download and upload ZIP to overleaf.
 
 ## Contributing 🤝
 Feel free to fork this repo and submit PRs. Your contributions are more than welcome!
