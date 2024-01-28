@@ -138,7 +138,7 @@ df_one_hot = pd.get_dummies(df['categorical_col'])
 df = pd.concat([df, df_one_hot], axis=1)
 
 # Binning
-bins = [0, 10, 20, 30]
+bins = [10, 20, 30]
 labels = ['low', 'medium', 'high']
 df['binned_col'] = pd.cut(df['numerical_col'], bins=bins, labels=labels)
 
